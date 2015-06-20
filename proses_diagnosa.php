@@ -444,9 +444,11 @@
 	   	}
 	}
 
-	$darahatas  = $_POST['darahatas'];
-	$darahbawah = $_POST['darahbawah'];
-	$diabetes   = $_POST['diabetes'];
+	$darahatas        = $_POST['darahatas'];
+	$darahbawah       = $_POST['darahbawah'];
+	$diabetes         = $_POST['diabetes'];
+	$riwayat_keluarga = $_POST['riwayat_keluarga'];
+	$merokok          = $_POST['merokok'];
 
 ?>
 
@@ -459,6 +461,8 @@
 	  <div class="panel-body">
 	  		<p>Tekanan Darah : <?php echo tekanan_darah($darahatas,$darahbawah); ?></p>
 	  		<p>Diabetes : <?php echo diabetes($diabetes); ?></p>
+	  		<p>Riwayat Keluarga : <?php echo $riwayat_keluarga; ?></p>
+	  		<p>Merokok : <?php echo $merokok; ?></p>
 	  </div>
 	</div>
 

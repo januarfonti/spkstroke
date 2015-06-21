@@ -309,15 +309,24 @@
 	{
 		if (($inputan_diabetes>=0) && ($inputan_diabetes <= 179))
 	   	{
-	   		$metune_diabetes = "rendah";
+			$metune_diabetes = "rendah";
+			$rumus_diabetes  = (180 - $inputan_diabetes) / 20;
 	   	}
 	   	elseif ($inputan_diabetes == 180)
 	   	{
 	   		$metune_diabetes = "sedang";
+	   		if (($inputan_diabetes > 160) && ($inputan_diabetes <= 180))
+	   		{
+	   			$rumus_diabetes  = ($inputan_diabetes - 160) / 20;
+	   		}
+	   		elseif (($inputan_diabetes > 180) && ($inputan_diabetes <= 200)) {
+	   			$rumus_diabetes  = (200 - $inputan_diabetes) / 20;
+	   		}
 	   	}
 	   	elseif ($inputan_diabetes >= 220)
 	   	{
 	   		$metune_diabetes = "tinggi";
+	   		$rumus_diabetes  = ($inputan_diabetes - 180) /20;
 	   	}
 	   	else //masuk ke pencarian dobel
 	   	{
@@ -365,9 +374,9 @@
 
 			$arrayName_diabetes = array($hasil_diabetes,$hasil_diabetes_1, $hasil_diabetes_2 );
 			$out_diabetes	= array_filter($arrayName_diabetes) ;
-			$keluar_diabetes = array_values($out_diabetes);
+			$metune_diabetes = array_values($out_diabetes);
 
-			return print_r($keluar_diabetes);
+			
 
 			/*
 			if(count(array_intersect($keluar, array('rendah','sedang'))) == count(array('rendah','sedang')))
@@ -442,6 +451,8 @@
 			*/
 
 	   	}
+
+	   	return $metune_diabetes;
 	}
 
 	$darahatas        = $_POST['darahatas'];

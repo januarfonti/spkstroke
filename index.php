@@ -63,6 +63,67 @@
 			  </div>
 
 			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Kolestrol</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" placeholder="Kolestrol" name="kolestrol" required>
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Aktivitas Fisik</label>
+			    <div class="col-sm-10">
+			    <?php
+	        		$query = mysql_query("SELECT * FROM gejala where nama_gejala = 'Aktivitas Fisik'");
+					while ($row = mysql_fetch_array($query))
+		        	{
+	        	?>
+			        <div class="radio">
+					  <label>
+					    <input type="radio" name="aktivitasfisik" value="<?php echo $row['skor']; ?>" required>
+					    <?php echo $row['tingkat']; ?>
+					  </label>
+					</div>
+	        	<?php
+			        }
+	        	?>
+				</div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Barat Badan</label>
+			    <div class="col-sm-10">
+				    <div class='row'>
+	                    <div class='col-xs-6'><input type='text' id='basicinput' placeholder='Berat Badan' class='form-control col-md-6' name='beratbadan' required></div>
+	                    <div class='col-xs-6'><input type='text' id='basicinput' placeholder='Tinggi Badan' class='form-control' name='tinggibadan' required></div>
+	                </div>
+	                <div class='row'>
+	                    <div class='col-xs-6'>Kg</div>
+	                    <div class='col-xs-6'>Cm</div>
+	                </div>
+			    </div>
+			  </div>
+
+			  <div class="form-group">
+			    <label class="col-sm-2 control-label">Riwayat Fibrilasi Atrium</label>
+			    <div class="col-sm-10">
+			    <?php
+	        		$query = mysql_query("SELECT * FROM gejala where nama_gejala = 'Riwayat Fibrilasi Atrium'");
+					while ($row = mysql_fetch_array($query))
+		        	{
+	        	?>
+			        <div class="radio">
+					  <label>
+					    <input type="radio" name="riwayatfibrilasi" value="<?php echo $row['skor']; ?>" required>
+					    <?php echo $row['tingkat']; ?>
+					  </label>
+					</div>
+	        	<?php
+			        }
+	        	?>
+				</div>
+			  </div>
+
+			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-default">Simpan</button>
 			    </div>

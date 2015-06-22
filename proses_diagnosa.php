@@ -1,5 +1,16 @@
 <?php
 
+	$darahatas        = $_POST['darahatas'];
+	$darahbawah       = $_POST['darahbawah'];
+	$inputan_diabetes = $_POST['diabetes'];
+	$riwayat_keluarga = $_POST['riwayat_keluarga'];
+	$merokok          = $_POST['merokok'];
+	$kolestrol        = $_POST['kolestrol'];
+	$aktivitasfisik   = $_POST['aktivitasfisik'];
+	$beratbadan       = $_POST['beratbadan'];
+	$tinggibadan      = $_POST['tinggibadan'];
+	$riwayatfibrilasi = $_POST['riwayatfibrilasi'];
+
 
 	/**
 	TEKANAN DARAH
@@ -305,34 +316,38 @@
 		return $hasil_tekanan_darah;
 	}
 
-	function diabetes($inputan_diabetes)
-	{
+
+/**
+
+
+	DIABETES
+
+
+**/
+
 		if (($inputan_diabetes>=0) && ($inputan_diabetes <= 179))
 	   	{
-			$metune_diabetes = "rendah";
-			$rumus_diabetes  = (180 - $inputan_diabetes) / 20;
+			$metune_diabetes['tingkat'] = 'rendah';
+			$metune_diabetes['angka']   = (180 - $inputan_diabetes) / 20;
 	   	}
 	   	elseif ($inputan_diabetes == 180)
 	   	{
-	   		$metune_diabetes = "sedang";
-	   		if (($inputan_diabetes > 160) && ($inputan_diabetes <= 180))
-	   		{
-	   			$rumus_diabetes  = ($inputan_diabetes - 160) / 20;
-	   		}
-	   		elseif (($inputan_diabetes > 180) && ($inputan_diabetes <= 200)) {
-	   			$rumus_diabetes  = (200 - $inputan_diabetes) / 20;
-	   		}
+	   		$metune_diabetes['tingkat'] = 'sedang';
+			$metune_diabetes['angka'] = ($inputan_diabetes - 160) / 20;
+	   		
 	   	}
 	   	elseif ($inputan_diabetes >= 220)
 	   	{
-	   		$metune_diabetes = "tinggi";
-	   		$rumus_diabetes  = ($inputan_diabetes - 180) /20;
+	   		$metune_diabetes['tingkat'] = 'tinggi';
+			$metune_diabetes['angka']   = ($inputan_diabetes - 180) /20;
 	   	}
 	   	else //masuk ke pencarian dobel
 	   	{
+	   		//rendah
 	   		if (($inputan_diabetes >= 0) && ($inputan_diabetes < 180))
 			{
-				$hasil_diabetes = "rendah";
+				$hasil_diabetes['tingkat'] = 'rendah';
+				$hasil_diabetes['angka']   = (180 - $inputan_diabetes) / 20;
 			}
 
 			if (isset($hasil_diabetes))
@@ -344,9 +359,17 @@
 				$hasil_diabetes = "";
 			}
 
-
+			//sedang
 			if (($inputan_diabetes >= 160) && ($inputan_diabetes <= 200)) {
-				$hasil_diabetes_1 = "sedang";
+				$hasil_diabetes_1['tingkat'] = "sedang";
+				if (($inputan_diabetes > 160) && ($inputan_diabetes <= 180))
+				{
+					$hasil_diabetes_1['angka']   = ($inputan_diabetes - 160) / 20;
+				}
+				elseif (($inputan_diabetes > 180) && ($inputan_diabetes <= 200))
+				{
+					$hasil_diabetes_1['angka']   = (200 - $inputan_diabetes) / 20;
+				}
 			}
 
 			if (isset($hasil_diabetes_1))
@@ -360,7 +383,8 @@
 
 
 			if (($inputan_diabetes >= 180) && ($inputan_diabetes <= 219)) {
-				$hasil_diabetes_2 = "tinggi";
+				$hasil_diabetes_2['tingkat'] = "tinggi";
+				$hasil_diabetes_2['angka']   = ($inputan_diabetes - 180) / 20;
 			}
 			if (isset($hasil_diabetes_2))
 			{
@@ -376,90 +400,11 @@
 			$out_diabetes	= array_filter($arrayName_diabetes) ;
 			$metune_diabetes = array_values($out_diabetes);
 
-			
-
-			/*
-			if(count(array_intersect($keluar, array('rendah','sedang'))) == count(array('rendah','sedang')))
-			{
-		    	//echo "rendah sedang";
-		    	if (in_array("rendah", $keluar))
-			   	{
-			   		$rumus = (130-$inputan)/10;
-			   		$rendah = $rumus;
-			   		//echo $rumus."<br/>";
-			   	}
-
-			   	if (in_array("sedang", $keluar))
-			   	{
-			   		if (($inputan>=120) && ($inputan <= 130))
-			   		{
-			   			$rumus1 = ($inputan-120)/10;
-			   		}
-			   		elseif (($inputan>130) && ($inputan <= 140))
-			   		{
-			   			$rumus1 = (140-$inputan)/10;
-			   		}
-			   		$sedang = $rumus1;
-			   		//echo $rumus1."<br/>";
-			   	}
-			   	if ($rendah > $sedang)
-			   	{
-			   		$metune_sistolik = "Rendah";
-			   	}
-			   	elseif ($rendah < $sedang) {
-			   		$metune_sistolik = "Sedang";
-			   	}
-			   	elseif ($rendah = $sedang) {
-			   		$metune_sistolik = "Sedang";
-			   	}
-			   	//echo $metune_sistolik;
-
-			}
-			elseif (count(array_intersect($keluar, array('sedang','tinggi'))) == count(array('sedang','tinggi')))
-			{
-				if (in_array("sedang", $keluar))
-			   	{
-			   		if (($inputan>120) && ($inputan <= 130))
-			   		{
-			   			$rumus1 = ($inputan-120)/10;
-			   		}
-			   		elseif (($inputan>130) && ($inputan <= 140))
-			   		{
-			   			$rumus1 = (140-$inputan)/10;
-			   		}
-			   		$sedang = $rumus1;
-			   		//echo $rumus1."<br/>";
-			   	}
-			   	if (in_array("tinggi", $keluar))
-			   	{
-			   		$rumus2 = ($inputan-130)/10;
-			   		$tinggi = $rumus2;
-			   		//echo $rumus2."<br/>";
-			   	}
-			   	if ($sedang > $tinggi)
-			   	{
-			   		$metune_sistolik = "Sedang";
-			   	}
-			   	elseif ($sedang < $tinggi) {
-			   		$metune_sistolik = "Tinggi";
-			   	}
-			   	elseif ($sedang = $tinggi) {
-			   		$metune_sistolik = "Tinggi";
-			   	}
-
-			}
-			*/
-
 	   	}
 
-	   	return $metune_diabetes;
-	}
 
-	$darahatas        = $_POST['darahatas'];
-	$darahbawah       = $_POST['darahbawah'];
-	$diabetes         = $_POST['diabetes'];
-	$riwayat_keluarga = $_POST['riwayat_keluarga'];
-	$merokok          = $_POST['merokok'];
+
+
 
 ?>
 
@@ -471,9 +416,14 @@
 	  </div>
 	  <div class="panel-body">
 	  		<p>Tekanan Darah : <?php echo tekanan_darah($darahatas,$darahbawah); ?></p>
-	  		<p>Diabetes : <?php echo diabetes($diabetes); ?></p>
+	  		Diabetes : 
+	  		<pre>
+	  		<p><?php  print_r($metune_diabetes); ?></p>
+	  		</pre>
 	  		<p>Riwayat Keluarga : <?php echo $riwayat_keluarga; ?></p>
 	  		<p>Merokok : <?php echo $merokok; ?></p>
+	  		<p>Aktivitas Fisik : <?php echo $aktivitasfisik; ?></p>
+	  		<p>Riwayat Fibrilasi : <?php echo $riwayatfibrilasi; ?></p>
 	  </div>
 	</div>
 
